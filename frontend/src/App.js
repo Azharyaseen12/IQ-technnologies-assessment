@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TaskList from './components/TaskList';
+import ApiIntegration from './components/ApiIntegration';
 import './App.css';
 
 /**
  * App Component
- * 
+ *
  * Root component of the application.
- * Provides the main layout and renders the TaskList container.
+ * Provides the main layout and renders the TaskList
+ * or ApiIntegration page based on active tab.
  */
 function App() {
+  const [activeTab, setActiveTab] = useState('tasks');
+
   return (
     <div className="app">
       <header className="app-header">
@@ -23,8 +27,26 @@ function App() {
         </div>
       </header>
 
+      <nav className="app-nav">
+        <div className="nav-tabs">
+          <button
+            className={`nav-tab ${activeTab === 'tasks' ? 'active' : ''}`}
+            onClick={() => setActiveTab('tasks')}
+          >
+            Tasks
+          </button>
+          <button
+            className={`nav-tab ${activeTab === 'api' ? 'active' : ''}`}
+            onClick={() => setActiveTab('api')}
+          >
+            API Integration
+          </button>
+        </div>
+      </nav>
+
       <main className="app-main">
-        <TaskList />
+        {activeTab === 'tasks' && <TaskList />}
+        {activeTab === 'api' && <ApiIntegration />}
       </main>
 
       <footer className="app-footer">
